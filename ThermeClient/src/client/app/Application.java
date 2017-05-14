@@ -8,6 +8,7 @@ package client.app;
 import client.connection.ClientManager;
 import core.connection.RequestWrapper;
 import java.net.UnknownHostException;
+import uiPannels.MainPanel;
 
 /**
  *

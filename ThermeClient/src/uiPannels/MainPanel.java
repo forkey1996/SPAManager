@@ -12,11 +12,9 @@ package uiPannels;
  */
 public class MainPanel extends javax.swing.JFrame {
 
-   
     public MainPanel() {
         initComponents();
         setLocationRelativeTo(null);
-       
     }
 
     /**

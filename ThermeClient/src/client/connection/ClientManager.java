@@ -12,7 +12,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import org.omg.CORBA.portable.UnknownException;
 
 /**
  *
@@ -26,9 +25,8 @@ public class ClientManager {
 	return response;
     }
     
-    public ConnectionError startClient(RequestWrapper request) throws UnknownHostException {
-	InetAddress address = InetAddress.getLocalHost();
-	try (Socket clientSocket = new Socket(address, RequestWrapper.PORT); 	    
+    public ConnectionError startClient(RequestWrapper request) {
+	try (Socket clientSocket = new Socket(InetAddress.getLocalHost(), RequestWrapper.PORT); 	    
 	    ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
 	    ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream())) {
 	    output.writeObject(request);

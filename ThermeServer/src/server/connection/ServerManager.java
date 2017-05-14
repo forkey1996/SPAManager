@@ -17,6 +17,8 @@ import java.net.Socket;
 public class ServerManager {
     private static ServerSocket serverSocket;
     
+    private ServerManager() {}
+    
     public static void runServer() throws IOException {
 	if (serverSocket == null) {
 	    serverSocket = new ServerSocket(RequestWrapper.PORT);
