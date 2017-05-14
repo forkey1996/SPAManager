@@ -28,11 +28,9 @@ public class ClientManager {
     
     public ConnectionError startClient(RequestWrapper request) throws UnknownHostException {
 	InetAddress address = InetAddress.getLocalHost();
-	try (Socket clientSocket = new Socket(address,1978); ) {
-	    
+	try (Socket clientSocket = new Socket(address, RequestWrapper.PORT); 	    
 	    ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
-	    
-	    ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
+	    ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream())) {
 	    output.writeObject(request);
 	    response = input.readObject();
 	} catch (UnknownHostException hostEx) { 

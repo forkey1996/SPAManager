@@ -45,12 +45,16 @@ public class ManageRequestThread extends Thread {
 			break;
 		}
 	    }
+	    
+	    if (clientSocket != null)
+		clientSocket.close();
 	} catch (IOException ex) {
 	    
 	} catch (ClassNotFoundException ex) {
 	    
 	}
 	
+
 
     }
 }

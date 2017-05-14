@@ -19,7 +19,7 @@ public class ServerManager {
     
     public static void runServer() throws IOException {
 	if (serverSocket == null) {
-	    serverSocket = new ServerSocket(1978);
+	    serverSocket = new ServerSocket(RequestWrapper.PORT);
 	    startListening();
 	}
     }
@@ -27,7 +27,8 @@ public class ServerManager {
     private static void startListening() {
 	while(true)
 	{
-	    try (Socket clientSocket = serverSocket.accept()) {
+	    try {
+		Socket clientSocket = serverSocket.accept();
 		ManageRequestThread m = new ManageRequestThread(clientSocket);
 		m.start();
 	    } catch (IOException IOEx) {
