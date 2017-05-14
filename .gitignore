@@ -5,3 +5,5 @@
 /ThermeCore/build/
 /ThermeCore/dist/
 /ThermeServer/build/
+/ThermeServer/dist/
+/ThermeClient/dist/
