@@ -5,11 +5,13 @@
  */
 package wrappers;
 
+import java.io.Serializable;
+
 /**
  *
  * @author AIM632
  */
-public class CustomerWrapper {
+public class CustomerWrapper implements Serializable{
     
        private int customerID;
        private int walletID;
@@ -45,6 +47,11 @@ public class CustomerWrapper {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerWrapper{" + "customerID=" + customerID + ", walletID=" + walletID + ", customerName=" + customerName + '}';
     }
        
 }

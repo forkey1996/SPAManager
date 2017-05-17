@@ -5,11 +5,14 @@
  */
 package wrappers;
 
+import java.io.Serializable;
+
 /**
  *
  * @author AIM632
  */
-public class ProductWrapper {
+public class ProductWrapper implements Serializable{
+    
     private int productID;
     private String productName;
     private double price;
@@ -54,6 +57,11 @@ public class ProductWrapper {
 
     public void setTypeID(int typeID) {
         this.typeID = typeID;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductWrapper{" + "productID=" + productID + ", productName=" + productName + ", price=" + price + ", typeID=" + typeID + '}';
     }
     
 }

@@ -63,6 +63,11 @@ public class MainPanel extends javax.swing.JFrame {
         textFieldCheckCustomer.setText("Customer ID");
 
         comboBoxCustomers.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Total", "Elysium", "Palm", "Galaxy" }));
+        comboBoxCustomers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxCustomersActionPerformed(evt);
+            }
+        });
 
         textFieldNumberOfCustomers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         textFieldNumberOfCustomers.setText("Customers");
@@ -198,6 +203,10 @@ public class MainPanel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboBoxCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCustomersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxCustomersActionPerformed
 
     /**
      * @param args the command line arguments

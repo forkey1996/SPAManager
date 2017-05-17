@@ -5,11 +5,14 @@
  */
 package wrappers;
 
+import java.io.Serializable;
+
 /**
  *
  * @author AIM632
  */
-public class AreaWrapper {
+public class AreaWrapper implements Serializable{
+    
     private int areaID;
     private String areaName;
     private int productID;
@@ -44,6 +47,11 @@ public class AreaWrapper {
 
     public void setProductID(int productID) {
         this.productID = productID;
+    }
+
+    @Override
+    public String toString() {
+        return "AreaWrapper{" + "areaID=" + areaID + ", areaName=" + areaName + ", productID=" + productID + '}';
     }
     
 }
