@@ -20,13 +20,10 @@ public class DatabaseUtilities {
     
     private DatabaseUtilities() {}
     
-<<<<<<< HEAD
-=======
     /**
      *
      * @return
      */
->>>>>>> DatabaseUIUtility
     public static ArrayList<AreaWrapper> getAllAreas() {
 	RequestWrapper request = new RequestWrapper("GetAllAreas");
 	ClientManager client = new ClientManager();
@@ -37,13 +34,10 @@ public class DatabaseUtilities {
 	return null;
     }
     
-<<<<<<< HEAD
-=======
     /**
      *
      * @return
      */
->>>>>>> DatabaseUIUtility
     public static ArrayList<ProductWrapper> getAllProducts() {
 	RequestWrapper request = new RequestWrapper("GetAllProducts");
 	ClientManager client = new ClientManager();
@@ -54,15 +48,11 @@ public class DatabaseUtilities {
 	return null;
     }
     
-<<<<<<< HEAD
-    
-=======
     /**
      *
      * @param customerID
      * @return
      */
->>>>>>> DatabaseUIUtility
     public static boolean checkCustomer(Integer customerID) {
 	RequestWrapper request = new RequestWrapper("CheckCustomer");
 	request.getRequestParameters().put("CustomerID", customerID.toString());

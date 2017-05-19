@@ -53,10 +53,4 @@ public class AreaWrapper implements Serializable{
     public void setProductID(int productID) {
         this.productID = productID;
     }
-
-    @Override
-    public String toString() {
-        return "AreaWrapper{" + "areaID=" + areaID + ", areaName=" + areaName + ", productID=" + productID + '}';
-    }
-    
 }
