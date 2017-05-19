@@ -20,6 +20,13 @@ public class DatabaseUtilities {
     
     private DatabaseUtilities() {}
     
+<<<<<<< HEAD
+=======
+    /**
+     *
+     * @return
+     */
+>>>>>>> DatabaseUIUtility
     public static ArrayList<AreaWrapper> getAllAreas() {
 	RequestWrapper request = new RequestWrapper("GetAllAreas");
 	ClientManager client = new ClientManager();
@@ -30,6 +37,13 @@ public class DatabaseUtilities {
 	return null;
     }
     
+<<<<<<< HEAD
+=======
+    /**
+     *
+     * @return
+     */
+>>>>>>> DatabaseUIUtility
     public static ArrayList<ProductWrapper> getAllProducts() {
 	RequestWrapper request = new RequestWrapper("GetAllProducts");
 	ClientManager client = new ClientManager();
@@ -40,7 +54,15 @@ public class DatabaseUtilities {
 	return null;
     }
     
+<<<<<<< HEAD
     
+=======
+    /**
+     *
+     * @param customerID
+     * @return
+     */
+>>>>>>> DatabaseUIUtility
     public static boolean checkCustomer(Integer customerID) {
 	RequestWrapper request = new RequestWrapper("CheckCustomer");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
@@ -52,6 +74,12 @@ public class DatabaseUtilities {
 	return false;
     }
     
+    /**
+     *
+     * @param customerID
+     * @param areaID
+     * @return
+     */
     public static boolean changeArea(Integer customerID, Integer areaID) {
 	RequestWrapper request = new RequestWrapper("ChangeArea");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
@@ -77,6 +105,11 @@ public class DatabaseUtilities {
 	return false;
     }
     
+    /**
+     *
+     * @param customerID
+     * @return
+     */
     public static boolean cashout(Integer customerID) {
 	RequestWrapper request = new RequestWrapper("Cashout");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
@@ -88,6 +121,11 @@ public class DatabaseUtilities {
 	return false;
     }
     
+    /**
+     *
+     * @param CustomerName
+     * @return
+     */
     public static CustomerWrapper addCustomer(String CustomerName) {
 	RequestWrapper request = new RequestWrapper("Cashout");
 	request.getRequestParameters().put("CustomerName", CustomerName);

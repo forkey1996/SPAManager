@@ -20,6 +20,11 @@ public class ProductWrapper implements Serializable{
 
     public ProductWrapper() {}
 
+    @Override
+    public String toString() {
+	return productName;
+    }
+
     public ProductWrapper(int productID, String productName, double price, int typeID) {
         this.productID = productID;
         this.productName = productName;
@@ -58,10 +63,4 @@ public class ProductWrapper implements Serializable{
     public void setTypeID(int typeID) {
         this.typeID = typeID;
     }
-
-    @Override
-    public String toString() {
-        return "ProductWrapper{" + "productID=" + productID + ", productName=" + productName + ", price=" + price + ", typeID=" + typeID + '}';
-    }
-    
 }

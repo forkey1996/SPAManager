@@ -17,6 +17,11 @@ public class AreaWrapper implements Serializable{
     private String areaName;
     private int productID;
 
+    @Override
+    public String toString() {
+	return areaName;
+    }
+
     public AreaWrapper() {}
 
     public AreaWrapper(int areaID, String areaName, int productID) {
