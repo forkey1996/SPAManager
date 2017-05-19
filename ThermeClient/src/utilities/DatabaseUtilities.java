@@ -7,7 +7,10 @@ package utilities;
 
 import client.connection.ClientManager;
 import core.connection.RequestWrapper;
-import java.awt.List;
+import java.util.ArrayList;
+import wrappers.AreaWrapper;
+import wrappers.CustomerWrapper;
+import wrappers.ProductWrapper;
 
 /**
  *
@@ -17,27 +20,39 @@ public class DatabaseUtilities {
     
     private DatabaseUtilities() {}
     
-    public static List<AreaWrapper> getAllAreas() {
+    /**
+     *
+     * @return
+     */
+    public static ArrayList<AreaWrapper> getAllAreas() {
 	RequestWrapper request = new RequestWrapper("GetAllAreas");
 	ClientManager client = new ClientManager();
 	client.startClient(request);
 	if (client.getResponse() != null) {
-	    return (List<AreaWrapper>)client.getResponse();
+	    return (ArrayList<AreaWrapper>)client.getResponse();
 	}
 	return null;
     }
     
-    public static List<ProductWrapper> getAllProducts() {
+    /**
+     *
+     * @return
+     */
+    public static ArrayList<ProductWrapper> getAllProducts() {
 	RequestWrapper request = new RequestWrapper("GetAllProducts");
 	ClientManager client = new ClientManager();
 	client.startClient(request);
 	if (client.getResponse() != null) {
-	    return (List<ProductWrapper>)client.getResponse();
+	    return (ArrayList<ProductWrapper>)client.getResponse();
 	}
 	return null;
     }
     
-        
+    /**
+     *
+     * @param customerID
+     * @return
+     */
     public static boolean checkCustomer(Integer customerID) {
 	RequestWrapper request = new RequestWrapper("CheckCustomer");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
@@ -49,6 +64,12 @@ public class DatabaseUtilities {
 	return false;
     }
     
+    /**
+     *
+     * @param customerID
+     * @param areaID
+     * @return
+     */
     public static boolean changeArea(Integer customerID, Integer areaID) {
 	RequestWrapper request = new RequestWrapper("ChangeArea");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
@@ -74,6 +95,11 @@ public class DatabaseUtilities {
 	return false;
     }
     
+    /**
+     *
+     * @param customerID
+     * @return
+     */
     public static boolean cashout(Integer customerID) {
 	RequestWrapper request = new RequestWrapper("Cashout");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
@@ -85,6 +111,11 @@ public class DatabaseUtilities {
 	return false;
     }
     
+    /**
+     *
+     * @param CustomerName
+     * @return
+     */
     public static CustomerWrapper addCustomer(String CustomerName) {
 	RequestWrapper request = new RequestWrapper("Cashout");
 	request.getRequestParameters().put("CustomerName", CustomerName);

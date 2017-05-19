@@ -17,6 +17,11 @@ public class ProductWrapper {
 
     public ProductWrapper() {}
 
+    @Override
+    public String toString() {
+	return productName;
+    }
+
     public ProductWrapper(int productID, String productName, double price, int typeID) {
         this.productID = productID;
         this.productName = productName;
