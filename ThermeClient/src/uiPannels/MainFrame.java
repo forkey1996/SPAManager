@@ -109,25 +109,25 @@ public class MainFrame extends javax.swing.JFrame {
         panelMain = new javax.swing.JPanel();
         panelCenter = new javax.swing.JPanel();
         comboBoxAreasCheck = new javax.swing.JComboBox<>();
-        filler19 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 15), new java.awt.Dimension(0, 15), new java.awt.Dimension(32767, 15));
+        filler19 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 17), new java.awt.Dimension(0, 17), new java.awt.Dimension(32767, 17));
         textFieldCustomerID = new javax.swing.JTextField();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 17), new java.awt.Dimension(0, 17), new java.awt.Dimension(32767, 17));
         panelProduct = new javax.swing.JPanel();
         comboBoxProducts = new javax.swing.JComboBox<>();
         filler12 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
         spinnerQuantity = new javax.swing.JSpinner();
         filler13 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
         textFieldPrice = new javax.swing.JTextField();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 12), new java.awt.Dimension(0, 12), new java.awt.Dimension(32767, 12));
         comboBoxAreas = new javax.swing.JComboBox<>();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 12), new java.awt.Dimension(0, 12), new java.awt.Dimension(32767, 12));
         textFieldTotal = new javax.swing.JTextField();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        filler22 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 17), new java.awt.Dimension(0, 17), new java.awt.Dimension(32767, 17));
         panelAddCustomer = new javax.swing.JPanel();
         textFieldCustomerName = new javax.swing.JTextField();
         filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
         textFieldNewCustomerID = new javax.swing.JTextField();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 14), new java.awt.Dimension(0, 14), new java.awt.Dimension(32767, 14));
         panelTitle = new javax.swing.JPanel();
         labelTitle = new javax.swing.JLabel();
         panelButtons = new javax.swing.JPanel();
@@ -155,24 +155,30 @@ public class MainFrame extends javax.swing.JFrame {
         labelPaymet = new javax.swing.JLabel();
         filler18 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 24), new java.awt.Dimension(0, 24), new java.awt.Dimension(32767, 24));
         labelNewCustomer = new javax.swing.JLabel();
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 14), new java.awt.Dimension(0, 14), new java.awt.Dimension(32767, 14));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1024, 305));
-        setMinimumSize(new java.awt.Dimension(640, 305));
-        setPreferredSize(new java.awt.Dimension(663, 305));
+        setMaximumSize(new java.awt.Dimension(2147483647, 380));
+        setMinimumSize(new java.awt.Dimension(680, 340));
+        setPreferredSize(new java.awt.Dimension(680, 340));
+        setSize(new java.awt.Dimension(680, 340));
 
         panelMain.setLayout(new java.awt.BorderLayout());
 
+        panelCenter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panelCenter.setMaximumSize(null);
+        panelCenter.setMinimumSize(new java.awt.Dimension(352, 220));
+        panelCenter.setPreferredSize(new java.awt.Dimension(352, 220));
         panelCenter.setLayout(new javax.swing.BoxLayout(panelCenter, javax.swing.BoxLayout.Y_AXIS));
 
         comboBoxAreasCheck.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxAreasCheck.setMaximumSize(new java.awt.Dimension(32767, 28));
         comboBoxAreasCheck.setMinimumSize(new java.awt.Dimension(72, 28));
         comboBoxAreasCheck.setPreferredSize(new java.awt.Dimension(72, 28));
         panelCenter.add(comboBoxAreasCheck);
         panelCenter.add(filler19);
 
         textFieldCustomerID.setText("Customer ID");
+        textFieldCustomerID.setMaximumSize(new java.awt.Dimension(2147483647, 24));
         textFieldCustomerID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textFieldCustomerIDActionPerformed(evt);
@@ -181,6 +187,7 @@ public class MainFrame extends javax.swing.JFrame {
         panelCenter.add(textFieldCustomerID);
         panelCenter.add(filler2);
 
+        panelProduct.setMaximumSize(new java.awt.Dimension(2147483647, 26));
         panelProduct.setLayout(new javax.swing.BoxLayout(panelProduct, javax.swing.BoxLayout.LINE_AXIS));
 
         comboBoxProducts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -188,19 +195,26 @@ public class MainFrame extends javax.swing.JFrame {
         panelProduct.add(comboBoxProducts);
         panelProduct.add(filler12);
 
+        spinnerQuantity.setMaximumSize(new java.awt.Dimension(200, 32767));
         spinnerQuantity.setMinimumSize(new java.awt.Dimension(50, 26));
         spinnerQuantity.setPreferredSize(new java.awt.Dimension(60, 26));
         panelProduct.add(spinnerQuantity);
         panelProduct.add(filler13);
 
         textFieldPrice.setEditable(false);
+        textFieldPrice.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         textFieldPrice.setText("Price");
+        textFieldPrice.setMaximumSize(new java.awt.Dimension(500, 2147483647));
+        textFieldPrice.setMinimumSize(new java.awt.Dimension(40, 24));
+        textFieldPrice.setName(""); // NOI18N
+        textFieldPrice.setPreferredSize(new java.awt.Dimension(100, 24));
         panelProduct.add(textFieldPrice);
 
         panelCenter.add(panelProduct);
         panelCenter.add(filler3);
 
         comboBoxAreas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxAreas.setMaximumSize(new java.awt.Dimension(32767, 28));
         comboBoxAreas.setMinimumSize(new java.awt.Dimension(72, 28));
         comboBoxAreas.setPreferredSize(new java.awt.Dimension(72, 28));
         panelCenter.add(comboBoxAreas);
@@ -208,15 +222,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         textFieldTotal.setEditable(false);
         textFieldTotal.setText("Total");
+        textFieldTotal.setMaximumSize(new java.awt.Dimension(2147483647, 26));
+        textFieldTotal.setMinimumSize(new java.awt.Dimension(14, 26));
+        textFieldTotal.setPreferredSize(new java.awt.Dimension(41, 26));
         textFieldTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textFieldTotalActionPerformed(evt);
             }
         });
         panelCenter.add(textFieldTotal);
-        panelCenter.add(filler5);
-        panelCenter.add(filler1);
+        panelCenter.add(filler22);
 
+        panelAddCustomer.setMaximumSize(new java.awt.Dimension(2147483647, 24));
         panelAddCustomer.setLayout(new javax.swing.BoxLayout(panelAddCustomer, javax.swing.BoxLayout.LINE_AXIS));
 
         textFieldCustomerName.setText("Customer name");
@@ -224,10 +241,13 @@ public class MainFrame extends javax.swing.JFrame {
         panelAddCustomer.add(filler10);
 
         textFieldNewCustomerID.setEditable(false);
+        textFieldNewCustomerID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         textFieldNewCustomerID.setText("Customer ID");
+        textFieldNewCustomerID.setPreferredSize(new java.awt.Dimension(30, 24));
         panelAddCustomer.add(textFieldNewCustomerID);
 
         panelCenter.add(panelAddCustomer);
+        panelCenter.add(filler6);
 
         panelMain.add(panelCenter, java.awt.BorderLayout.CENTER);
 
@@ -241,10 +261,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         panelMain.add(panelTitle, java.awt.BorderLayout.PAGE_START);
 
+        panelButtons.setMaximumSize(null);
         panelButtons.setLayout(new javax.swing.BoxLayout(panelButtons, javax.swing.BoxLayout.Y_AXIS));
 
         textFieldNumber.setEditable(false);
+        textFieldNumber.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         textFieldNumber.setText("Customers");
+        textFieldNumber.setMaximumSize(new java.awt.Dimension(2147483647, 30));
         textFieldNumber.setMinimumSize(new java.awt.Dimension(0, 30));
         textFieldNumber.setName(""); // NOI18N
         textFieldNumber.setPreferredSize(new java.awt.Dimension(0, 30));
@@ -287,6 +310,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         panelMain.add(panelButtons, java.awt.BorderLayout.LINE_END);
 
+        panelLabels.setMaximumSize(null);
+        panelLabels.setMinimumSize(new java.awt.Dimension(135, 236));
+        panelLabels.setPreferredSize(new java.awt.Dimension(125, 226));
         panelLabels.setLayout(new javax.swing.BoxLayout(panelLabels, javax.swing.BoxLayout.Y_AXIS));
         panelLabels.add(filler20);
 
@@ -314,7 +340,6 @@ public class MainFrame extends javax.swing.JFrame {
         panelLabels.add(labelNewCustomer);
 
         panelMain.add(panelLabels, java.awt.BorderLayout.LINE_START);
-        panelMain.add(filler6, java.awt.BorderLayout.PAGE_END);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -329,7 +354,7 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -389,7 +414,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxAreas;
     private javax.swing.JComboBox<String> comboBoxAreasCheck;
     private javax.swing.JComboBox<String> comboBoxProducts;
-    private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler11;
     private javax.swing.Box.Filler filler12;
@@ -403,9 +427,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler20;
     private javax.swing.Box.Filler filler21;
+    private javax.swing.Box.Filler filler22;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
     private javax.swing.Box.Filler filler8;
