@@ -7,13 +7,12 @@ package utilities;
 
 import client.connection.ClientManager;
 import core.connection.RequestWrapper;
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import wrappers.AreaWrapper;
-import wrappers.CustomerWrapper;
+import wrappers.BoughtProductWrapper;
 import wrappers.ProductWrapper;
+import wrappers.TransactionWrapper;
 
 /**
  *
@@ -108,15 +107,15 @@ public class DatabaseUtilities {
      * @param customerID
      * @return
      */
-    public static boolean cashout(Integer customerID) {
+    public static ArrayList<BoughtProductWrapper> cashout(Integer customerID) {
 	RequestWrapper request = new RequestWrapper("Cashout");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
-	ClientManager client = new ClientManager();
+        ClientManager client = new ClientManager();
 	client.startClient(request);
 	if (client.getResponse() != null) {
-	    return (boolean)client.getResponse();
+	    return (ArrayList<BoughtProductWrapper>)client.getResponse();
 	}
-	return false;
+	return null;
     }
     
     /**
@@ -134,4 +133,29 @@ public class DatabaseUtilities {
 	}
 	return null;
     }
+    
+    public static Integer getAreaID(String areaName)
+    {
+        RequestWrapper request = new RequestWrapper("GetAreaIdByName");
+	request.getRequestParameters().put("areaName", areaName);
+	ClientManager client = new ClientManager();
+	client.startClient(request);
+	if (client.getResponse() != null) {
+	    return (Integer)client.getResponse();
+	}
+	return null;
+    }
+    
+    public static Integer getNumberOfCustomers(Integer indexArea)
+    {
+        RequestWrapper request = new RequestWrapper("GetNumberOfCustomers");
+	request.getRequestParameters().put("indexArea", indexArea.toString());
+	ClientManager client = new ClientManager();
+	client.startClient(request);
+	if (client.getResponse() != null) {
+	    return (Integer)client.getResponse();
+	}
+	return null;
+    }
+
 }

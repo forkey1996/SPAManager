@@ -14,11 +14,11 @@ import java.io.Serializable;
 public class BoughtProductWrapper implements Serializable{
     
     private int ProductID, TransactionID;
-    private int Name;
+    private String Name;
     private double price;
     private int amount;
 
-    public BoughtProductWrapper(int ProductID, int TransactionID, int Name, double price, int amount) {
+    public BoughtProductWrapper(int ProductID, int TransactionID, String Name, double price, int amount) {
         this.ProductID = ProductID;
         this.TransactionID = TransactionID;
         this.Name = Name;
@@ -30,7 +30,7 @@ public class BoughtProductWrapper implements Serializable{
         return amount;
     }
 
-    public int getName() {
+    public String getName() {
         return Name;
     }
 
@@ -50,7 +50,7 @@ public class BoughtProductWrapper implements Serializable{
         this.amount = amount;
     }
 
-    public void setName(int Name) {
+    public void setName(String Name) {
         this.Name = Name;
     }
 
@@ -65,7 +65,10 @@ public class BoughtProductWrapper implements Serializable{
     public void setTransactionID(int TransactionID) {
         this.TransactionID = TransactionID;
     }
-    
-        
+
+    @Override
+    public String toString() {
+        return ProductID + ". " + Name + " " + price + "(RON) x " + amount + " = " + price*amount;
+    }
     
 }

@@ -10,7 +10,9 @@ import commands.BuyProductCommand;
 import commands.CashoutCommand;
 import commands.ChangeAreaCommand;
 import commands.CheckCustomerCommand;
+import commands.GetAreaIdByNameCommand;
 import commands.GetAreasCommand;
+import commands.GetNumberOfCustomersCommand;
 import commands.GetProductsCommand;
 import core.connection.RequestWrapper;
 import java.io.IOException;
@@ -77,6 +79,14 @@ public class ManageRequestThread extends Thread {
                     case "Cashout":
                         CashoutCommand cashoutCommand = new CashoutCommand(request,output);
                         cashoutCommand.Execute();
+                        break;
+                    case "GetAreaIdByName":
+                        GetAreaIdByNameCommand getArea = new GetAreaIdByNameCommand(request,output);
+                        getArea.Execute();
+                        break;
+                    case "GetNumberOfCustomers":
+                        GetNumberOfCustomersCommand getCustomers = new GetNumberOfCustomersCommand(request,output);
+                        getCustomers.Execute();
                         break;
                 }
             }
