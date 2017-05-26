@@ -7,7 +7,10 @@ package utilities;
 
 import client.connection.ClientManager;
 import core.connection.RequestWrapper;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import wrappers.AreaWrapper;
 import wrappers.CustomerWrapper;
 import wrappers.ProductWrapper;
@@ -29,7 +32,12 @@ public class DatabaseUtilities {
 	ClientManager client = new ClientManager();
 	client.startClient(request);
 	if (client.getResponse() != null) {
-	    return (ArrayList<AreaWrapper>)client.getResponse();
+            try {
+                return (ArrayList<AreaWrapper>)client.getResponse();
+            } catch (ClassCastException ex) {
+                JOptionPane.showMessageDialog(null, client.getResponse(), "Error", JOptionPane.ERROR_MESSAGE);
+                
+            }
 	}
 	return null;
     }
@@ -116,13 +124,13 @@ public class DatabaseUtilities {
      * @param CustomerName
      * @return
      */
-    public static CustomerWrapper addCustomer(String CustomerName) {
+    public static Integer addCustomer(String CustomerName) {
 	RequestWrapper request = new RequestWrapper("AddCustomer");
 	request.getRequestParameters().put("CustomerName", CustomerName);
 	ClientManager client = new ClientManager();
 	client.startClient(request);
 	if (client.getResponse() != null) {
-	    return (CustomerWrapper)client.getResponse();
+	    return (Integer)client.getResponse();
 	}
 	return null;
     }

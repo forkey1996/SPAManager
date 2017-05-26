@@ -36,7 +36,7 @@ public class AddCustomerCommand extends Command {
                            "VALUES(?,?)";
             
             PreparedStatement statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1,request.getRequestParameters().get("fullName"));
+            statement.setString(1,request.getRequestParameters().get("CustomerName"));
             statement.setDouble(2,0.0);
             
             int result = statement.executeUpdate();
@@ -45,13 +45,13 @@ public class AddCustomerCommand extends Command {
             
             ResultSet rs = statement.getGeneratedKeys();
             
-            int customerID;
+            int customerID = -1;
             if(rs.next())
             {
                 customerID = rs.getInt(1);   // last ID
             }
            
-            output.writeObject(verify);
+            output.writeObject(customerID);
         }
         catch(SQLException | IOException SQLErr)
         {

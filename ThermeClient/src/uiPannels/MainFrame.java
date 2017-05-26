@@ -73,9 +73,9 @@ public class MainFrame extends javax.swing.JFrame {
 	});
 	
 	buttonAddCustomer.addActionListener(event -> {
-		CustomerWrapper newCustomer = DatabaseUtilities.addCustomer(textFieldCustomerName.getText().trim());
-		if (newCustomer != null)
-		    textFieldCustomerID.setText(Integer.toString(newCustomer.getCustomerID()));
+		Integer newCustomer = DatabaseUtilities.addCustomer(textFieldCustomerName.getText().trim());
+		if (newCustomer != -1)
+		    textFieldNewCustomerID.setText(Integer.toString(newCustomer));
 	});
     }
     

@@ -48,7 +48,7 @@ public class BuyProductCommand extends Command {
             }
 
             // Add a new transaction
-            query = "INSERT INTO transaction(idProduct, amount) VALUES(?,?)";
+            query = "INSERT INTO transaction(productID, amount) VALUES(?,?)";
 
             statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("ProductID")));
