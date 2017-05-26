@@ -31,7 +31,7 @@ public class ChangeAreaCommand extends Command {
         String query;
         Connection con = DatabaseConnection.getConnection();
         try {
-            query = "SELECT idCustomer, idArea FROM access WHERE idCustomer = ? AND idArea= ?";
+            query = "SELECT customerID, areaID FROM access WHERE customerID = ? AND areaID= ?";
 
             PreparedStatement statement = con.prepareStatement(query);
             statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
@@ -44,7 +44,7 @@ public class ChangeAreaCommand extends Command {
             }
 
             if (verify == true) {
-                query = "UPDATE current SET idArea = ? WHERE idCustomer = ?";
+                query = "UPDATE current SET areaID = ? WHERE customerID = ?";
 
                 statement = con.prepareStatement(query);
                 statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("AreaID")));
@@ -53,7 +53,7 @@ public class ChangeAreaCommand extends Command {
                 int rowsAffected = statement.executeUpdate();
 
                 if (rowsAffected == 0) {
-                    query = "INSERT INTO current VALES(?,?)";
+                    query = "INSERT INTO current VALUES(?,?)";
 
                     statement = con.prepareStatement(query);
                     statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));

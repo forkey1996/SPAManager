@@ -39,10 +39,10 @@ public class GetProductsCommand extends Command {
 
             while (result.next()) {
 
-                int id = result.getInt("idProduct");
+                int id = result.getInt("productID");
                 String name = result.getString("name");
                 double price = result.getInt("price");
-                int typeid = result.getInt("idType");
+                int typeid = result.getInt("typeID");
                 ProductWrapper product = new ProductWrapper(id, name, price, typeid);
                 products.add(product);
                 

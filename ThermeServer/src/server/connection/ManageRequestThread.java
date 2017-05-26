@@ -5,7 +5,9 @@
  */
 package server.connection;
 
+import commands.AddCustomerCommand;
 import commands.BuyProductCommand;
+import commands.CashoutCommand;
 import commands.ChangeAreaCommand;
 import commands.CheckCustomerCommand;
 import commands.GetAreasCommand;
@@ -67,6 +69,14 @@ public class ManageRequestThread extends Thread {
                     case "BuyProduct":
                         BuyProductCommand buyProductCommand = new BuyProductCommand(request, output);
                         buyProductCommand.Execute();
+                        break;
+                    case "AddCustomer":
+                        AddCustomerCommand addCustomerCommand = new AddCustomerCommand(request,output);
+                        addCustomerCommand.Execute();
+                        break;
+                    case "Cashout":
+                        CashoutCommand cashoutCommand = new CashoutCommand(request,output);
+                        cashoutCommand.Execute();
                         break;
                 }
             }

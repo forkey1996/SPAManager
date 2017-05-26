@@ -14,23 +14,18 @@ import java.io.Serializable;
 public class CustomerWrapper implements Serializable{
     
        private int customerID;
-       private int walletID;
        private String customerName;
 
     public CustomerWrapper() {}
 
-    public CustomerWrapper(int customerID, int walletID, String customerName) {
+    public CustomerWrapper(int customerID, String customerName) {
         this.customerID = customerID;
-        this.walletID = walletID;
+        
         this.customerName = customerName;
     }
 
     public int getCustomerID() {
         return customerID;
-    }
-
-    public int getWalletID() {
-        return walletID;
     }
 
     public String getCustomerName() {
@@ -41,9 +36,6 @@ public class CustomerWrapper implements Serializable{
         this.customerID = customerID;
     }
 
-    public void setWalletID(int walletID) {
-        this.walletID = walletID;
-    }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
@@ -51,7 +43,7 @@ public class CustomerWrapper implements Serializable{
 
     @Override
     public String toString() {
-        return "CustomerWrapper{" + "customerID=" + customerID + ", walletID=" + walletID + ", customerName=" + customerName + '}';
+        return "CustomerWrapper{" + "customerID=" + customerID + ", customerName=" + customerName + '}';
     }
        
 }

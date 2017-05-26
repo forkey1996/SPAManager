@@ -32,10 +32,11 @@ public class BuyProductCommand extends Command {
         String query;
         int rowsAffected;
         int idTransaction = 0;
-        int idWallet = 0;
+        int idCustomer = 0;
         Connection con = DatabaseConnection.getConnection();
         try {
-            query = "SELECT walletID FROM customer WHERE customerID = ?";
+            // Get walletID == customerID
+            query = "SELECT customerID FROM customer WHERE customerID = ?";
 
             PreparedStatement statement = con.prepareStatement(query);
             statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
@@ -43,9 +44,10 @@ public class BuyProductCommand extends Command {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                idWallet = result.getInt("walletID");
+                idCustomer = result.getInt("customerID");
             }
 
+            // Add a new transaction
             query = "INSERT INTO transaction(idProduct, amount) VALUES(?,?)";
 
             statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -63,10 +65,11 @@ public class BuyProductCommand extends Command {
                 verify = true;
             }
 
+            // Add transaction to wallet
             query = "INSERT INTO wallettransaction VALUES(?,?)";
 
             statement = con.prepareStatement(query);
-            statement.setInt(1, idWallet);
+            statement.setInt(1, idCustomer);
             statement.setInt(2, idTransaction);
 
             rowsAffected = statement.executeUpdate();

@@ -39,9 +39,9 @@ public class GetAreasCommand extends Command{
         
         while(result.next()){
        
-            int id = result.getInt("idArea");
+            int id = result.getInt("areaID");
             String name = result.getString("name");
-            int product = result.getInt("idProduct");
+            int product = result.getInt("productID");
             AreaWrapper area = new AreaWrapper(id, name, product);
             areas.add(area);
         }

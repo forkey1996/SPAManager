@@ -117,7 +117,7 @@ public class DatabaseUtilities {
      * @return
      */
     public static CustomerWrapper addCustomer(String CustomerName) {
-	RequestWrapper request = new RequestWrapper("Cashout");
+	RequestWrapper request = new RequestWrapper("AddCustomer");
 	request.getRequestParameters().put("CustomerName", CustomerName);
 	ClientManager client = new ClientManager();
 	client.startClient(request);
