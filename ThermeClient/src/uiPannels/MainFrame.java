@@ -14,6 +14,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import utilities.DatabaseUtilities;
 import wrappers.AreaWrapper;
+import wrappers.BoughtProductWrapper;
 import wrappers.CustomerWrapper;
 import wrappers.ProductWrapper;
 
@@ -26,15 +27,25 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    ArrayList<AreaWrapper> areas = null;
-    ArrayList<ProductWrapper> products = null;
+    ArrayList<AreaWrapper> areas = new ArrayList<>();
+    ArrayList<AreaWrapper> areasCheck = new ArrayList<>();
+    
+    ArrayList<ProductWrapper> products = new ArrayList<>();
+    
     
     public MainFrame() {
 	initComponents();
+        
+        
 	areas = DatabaseUtilities.getAllAreas();
+        
+        areasCheck = DatabaseUtilities.getAllAreas();      
+        areasCheck.add(0, new AreaWrapper(0,"Total",0));
+        
 	products = DatabaseUtilities.getAllProducts();
+        
 	bindCombobox(comboBoxAreas, areas);	
-	bindCombobox(comboBoxAreasCheck, areas);
+	bindCombobox(comboBoxAreasCheck, areasCheck);
 	bindCombobox(comboBoxProducts, products);
 	
 	buttonCheckCustomer.addActionListener(event -> {
@@ -157,6 +168,7 @@ public class MainFrame extends javax.swing.JFrame {
         labelNewCustomer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SPA Manager");
         setMaximumSize(new java.awt.Dimension(2147483647, 380));
         setMinimumSize(new java.awt.Dimension(680, 340));
         setPreferredSize(new java.awt.Dimension(680, 340));
@@ -173,6 +185,11 @@ public class MainFrame extends javax.swing.JFrame {
         comboBoxAreasCheck.setMaximumSize(new java.awt.Dimension(32767, 28));
         comboBoxAreasCheck.setMinimumSize(new java.awt.Dimension(72, 28));
         comboBoxAreasCheck.setPreferredSize(new java.awt.Dimension(72, 28));
+        comboBoxAreasCheck.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxAreasCheckItemStateChanged(evt);
+            }
+        });
         panelCenter.add(comboBoxAreasCheck);
         panelCenter.add(filler19);
 
@@ -224,6 +241,11 @@ public class MainFrame extends javax.swing.JFrame {
         textFieldTotal.setMaximumSize(new java.awt.Dimension(2147483647, 26));
         textFieldTotal.setMinimumSize(new java.awt.Dimension(14, 26));
         textFieldTotal.setPreferredSize(new java.awt.Dimension(41, 26));
+        textFieldTotal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textFieldTotalMouseClicked(evt);
+            }
+        });
         textFieldTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textFieldTotalActionPerformed(evt);
@@ -297,6 +319,11 @@ public class MainFrame extends javax.swing.JFrame {
         buttonCashout.setMaximumSize(new java.awt.Dimension(150, 32));
         buttonCashout.setMinimumSize(new java.awt.Dimension(150, 32));
         buttonCashout.setPreferredSize(new java.awt.Dimension(150, 32));
+        buttonCashout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCashoutActionPerformed(evt);
+            }
+        });
         panelButtons.add(buttonCashout);
         panelButtons.add(filler11);
 
@@ -366,8 +393,60 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldTotalActionPerformed
 
+    private void buttonCashoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCashoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonCashoutActionPerformed
+
+    private void textFieldTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textFieldTotalMouseClicked
+        Integer customerID = Integer.parseInt(textFieldCustomerID.getText());
+        ArrayList<BoughtProductWrapper> transactions = DatabaseUtilities.cashout(customerID);
+        if(transactions == null)
+        {
+            JOptionPane.showMessageDialog(null,"Clientul "+customerID+" nu a efectuat tranzactii","Mesaj",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        String joinTransactions = "";
+        for(BoughtProductWrapper i: transactions)
+        {
+            joinTransactions += i.toString() + "\n";
+        }
+        
+        if(joinTransactions.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Customer with ID "+customerID.toString()+" has no transactions","Invoice",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        String message = "Transactions carried out by customer with ID "+customerID.toString()+":\n\n"+joinTransactions;
+        double sum = 0.0;
+        for(BoughtProductWrapper p: transactions)
+        {
+            sum += p.getAmount() * p.getPrice();
+        }
+        
+        textFieldTotal.setText(Double.toString(sum));
+        JOptionPane.showMessageDialog(null,message+"\n\n                        Total: "+sum+" RON","Invoice",JOptionPane.INFORMATION_MESSAGE);
+        
+    }//GEN-LAST:event_textFieldTotalMouseClicked
+
+    private void comboBoxAreasCheckItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxAreasCheckItemStateChanged
+        String selectedValue = comboBoxAreasCheck.getSelectedItem().toString();
+        
+        Integer index;
+        
+        if(selectedValue.equals("Total"))
+            index = 0;
+        else
+            index = DatabaseUtilities.getAreaID(selectedValue);
+
+        Integer numberOfCustomers = DatabaseUtilities.getNumberOfCustomers(index);
+        
+        textFieldNumber.setText(numberOfCustomers.toString());
+    }//GEN-LAST:event_comboBoxAreasCheckItemStateChanged
+
     /**
-     * @param args the command line arguments
+     * @param args the commandl line arguments
      */
     public static void main(String args[]) {
 	/* Set the Nimbus look and feel */

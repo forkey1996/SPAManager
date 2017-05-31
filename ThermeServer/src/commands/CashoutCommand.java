@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import server.database.DatabaseConnection;
 import wrappers.BoughtProductWrapper;
 
@@ -38,15 +39,20 @@ public class CashoutCommand extends Command{
         try{
             ArrayList<BoughtProductWrapper> invoice = new ArrayList<>();
             String query = 
-                    "select wt.transactionID, p.productID, p.name, p.price, t.amount"
-                    +"from customer c join wallettransaction wt on(c.customerID=wt.customerID)"
-                    +"                join transaction t on(wt.transactionID=t.transactionID)"
-                    +"                join product p on(t.productID = p.productID)"
-                    +"where c.customerID=?";
+                     "select wt.transactionID, p.productID, p.name, p.price, t.quantity"
+                    +" from customer c join wallettransaction wt on(c.customerID=wt.customerID)"
+                    +" join transaction t on(wt.transactionID=t.transactionID)"
+                    +" join product p on(t.productID = p.productID)"
+                    +" where c.customerID = ?";
             
-            PreparedStatement statement = con.prepareCall(query);
-            statement.setInt(1,Integer.valueOf(request.getRequestParameters().get("customerID")));
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1,Integer.valueOf(request.getRequestParameters().get("CustomerID")));
             ResultSet result = statement.executeQuery();
+            
+            for(BoughtProductWrapper p: invoice)
+            {
+               System.out.println(p);
+            }
             
             while(result.next())
             {
@@ -54,17 +60,10 @@ public class CashoutCommand extends Command{
                 int product     = result.getInt("productID");
                 double price    = result.getDouble("price");
                 String name     = result.getString("name");
-                int amount      = result.getInt("amount");    
-                invoice.add(new BoughtProductWrapper(product, transaction, amount, price, amount));
+                int amount      = result.getInt("quantity");    
+                invoice.add(new BoughtProductWrapper(product, transaction, name, price, amount));
             }
-            
-            double sum = 0.0;
-            
-            // Need to be returned
-            for(BoughtProductWrapper product : invoice)
-            {
-                sum += product.getPrice() * product.getAmount();
-            }
+
             
             output.writeObject(invoice);
         }
