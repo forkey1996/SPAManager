@@ -52,8 +52,8 @@ public class MainFrame extends javax.swing.JFrame {
 		int customerID = Integer.parseInt(textFieldCustomerID.getText().trim());
 		int productID = ((ProductWrapper)comboBoxProducts.getSelectedItem()).getProductID();
 		int quantity = (Integer)spinnerQuantity.getValue();
-		boolean bought = DatabaseUtilities.buyProduct(customerID, productID, quantity);
-		JOptionPane.showMessageDialog(null, (bought ? "Bought" : "Not bought"));
+		int bought = DatabaseUtilities.buyProduct(customerID, productID, quantity);
+		JOptionPane.showMessageDialog(null, (bought>0 ? "Bought" : "Not bought"));
 		//if (bought) 
 		    //TODO add to final value to pay
 	    } catch (NumberFormatException ex) {
@@ -165,7 +165,6 @@ public class MainFrame extends javax.swing.JFrame {
         panelMain.setLayout(new java.awt.BorderLayout());
 
         panelCenter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        panelCenter.setMaximumSize(null);
         panelCenter.setMinimumSize(new java.awt.Dimension(352, 220));
         panelCenter.setPreferredSize(new java.awt.Dimension(352, 220));
         panelCenter.setLayout(new javax.swing.BoxLayout(panelCenter, javax.swing.BoxLayout.Y_AXIS));
@@ -261,7 +260,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         panelMain.add(panelTitle, java.awt.BorderLayout.PAGE_START);
 
-        panelButtons.setMaximumSize(null);
         panelButtons.setLayout(new javax.swing.BoxLayout(panelButtons, javax.swing.BoxLayout.Y_AXIS));
 
         textFieldNumber.setEditable(false);
@@ -310,7 +308,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         panelMain.add(panelButtons, java.awt.BorderLayout.LINE_END);
 
-        panelLabels.setMaximumSize(null);
         panelLabels.setMinimumSize(new java.awt.Dimension(135, 236));
         panelLabels.setPreferredSize(new java.awt.Dimension(125, 226));
         panelLabels.setLayout(new javax.swing.BoxLayout(panelLabels, javax.swing.BoxLayout.Y_AXIS));

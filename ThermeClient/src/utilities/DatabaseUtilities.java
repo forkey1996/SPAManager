@@ -90,7 +90,7 @@ public class DatabaseUtilities {
 	return false;
     }
     
-    public static boolean buyProduct(Integer customerID, Integer productID, Integer quantity) {
+    public static Integer buyProduct(Integer customerID, Integer productID, Integer quantity) {
 	RequestWrapper request = new RequestWrapper("BuyProduct");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
 	request.getRequestParameters().put("ProductID", productID.toString());
@@ -98,10 +98,13 @@ public class DatabaseUtilities {
 	ClientManager client = new ClientManager();
 	client.startClient(request);
 	if (client.getResponse() != null) {
-	    return (boolean)client.getResponse();
+	    return (Integer)client.getResponse();
 	}
-	return false;
+	return -1;
     }
+
+
+
     
     /**
      *
