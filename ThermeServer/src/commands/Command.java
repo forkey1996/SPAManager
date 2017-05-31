@@ -6,6 +6,7 @@
 package commands;
 
 import core.connection.RequestWrapper;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 
@@ -21,5 +22,5 @@ public abstract class Command {
         this.request = request;
         this.output = output;
     }
-    public abstract void Execute();
+    public abstract void Execute() throws SQLException, IOException;
 }

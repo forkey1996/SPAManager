@@ -27,35 +27,27 @@ public class AddCustomerCommand extends Command {
     }
 
     @Override
-    public void Execute() {
+    public void Execute() throws SQLException, IOException {
         Connection con = DatabaseConnection.getConnection();
         boolean verify = false;
-        try
-        {
-            String query = "insert into customer(fullName,subtotal)"+
-                           "VALUES(?,?)";
-            
-            PreparedStatement statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        String query = "insert into customer(fullName)"+
+                       "VALUES(?)";
+
+        try(PreparedStatement statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);){
             statement.setString(1,request.getRequestParameters().get("CustomerName"));
-            statement.setDouble(2,0.0);
-            
+
             int result = statement.executeUpdate();
             if(result==1)
                 verify = true;
-            
-            ResultSet rs = statement.getGeneratedKeys();
-            
-            int customerID = -1;
-            if(rs.next())
-            {
-                customerID = rs.getInt(1);   // last ID
+
+            try(ResultSet rs = statement.getGeneratedKeys();){
+                int customerID = -1;
+                if(rs.next())
+                    customerID = rs.getInt(1);   // last ID
+                output.writeObject(customerID);
             }
-           
-            output.writeObject(customerID);
         }
-        catch(SQLException | IOException SQLErr)
-        {
-            System.out.println("Error while proccessing request or sending a response: "+SQLErr.getMessage());
-        }
+        
     }
 }

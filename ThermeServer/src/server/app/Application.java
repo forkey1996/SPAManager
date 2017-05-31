@@ -6,6 +6,8 @@
 package server.app;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import server.connection.ServerManager;
 import server.database.DatabaseConnection;
 
@@ -14,10 +16,12 @@ import server.database.DatabaseConnection;
  * @author fernando
  */
 public class Application {
-    public static void main(String[] args) throws IOException {
-	
-        DatabaseConnection.connect();
-        ServerManager.runServer();
-        
+    public static void main(String[] args) {
+        try {
+            DatabaseConnection.connect();
+            ServerManager.runServer();
+        } catch (IOException ex) {
+            System.out.println("Could not start server");
+        }
     }
 }

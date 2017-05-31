@@ -10,6 +10,7 @@ import commands.BuyProductCommand;
 import commands.CashoutCommand;
 import commands.ChangeAreaCommand;
 import commands.CheckCustomerCommand;
+import commands.DeleteTransactionsCommand;
 import commands.GetAreaIdByNameCommand;
 import commands.GetAreasCommand;
 import commands.GetNumberOfCustomersCommand;
@@ -19,6 +20,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -39,19 +43,16 @@ public class ManageRequestThread extends Thread {
                 ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream())) {
             processRequest(input, output);
         } catch (IOException IOEx) {
-            System.out.println("Error");
+            System.out.println("Client socket error");
         }
     }
 
-    private void processRequest(ObjectInputStream input, ObjectOutputStream output) {
+    private void processRequest(ObjectInputStream input, ObjectOutputStream output) throws IOException {
         try {
             RequestWrapper request = (RequestWrapper) input.readObject();
             if (request != null) {
                 switch (request.getRequestName()) {
-                    default:
-                        System.out.println(request.getRequestName());
-                        output.writeObject("Bad request!");
-                        break;
+
                     case "GetAllAreas":
                         GetAreasCommand getAreasCommand = new GetAreasCommand(request, output);
                         getAreasCommand.Execute();
@@ -88,14 +89,22 @@ public class ManageRequestThread extends Thread {
                         GetNumberOfCustomersCommand getCustomers = new GetNumberOfCustomersCommand(request,output);
                         getCustomers.Execute();
                         break;
+                    case "DeleteTransactions":
+                        DeleteTransactionsCommand deleteTransactions = new DeleteTransactionsCommand(request,output);
+                        deleteTransactions.Execute();
+                        break;
+                    default:
+                        System.out.println(request.getRequestName());
+                        output.writeObject("Bad request!");
+                        break;
                 }
             }
-
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("Request processing error: "+ex.getMessage());
+        } finally {
             if (clientSocket != null) {
                 clientSocket.close();
             }
-        } catch (ClassNotFoundException | IOException ex) {
-
         }
 
     }

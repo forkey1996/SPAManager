@@ -17,7 +17,7 @@ import java.sql.Statement;
  */
 public class DatabaseConnection {
     public static Connection connection;
-     private static final String URL = "jdbc:mysql://localhost:3306/spamanager?autoReconnect=true&useSSL=false";
+     private static final String URL = "jdbc:mysql://localhost:3306/spamanagerfinal?autoReconnect=true&useSSL=false";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     
     private DatabaseConnection()

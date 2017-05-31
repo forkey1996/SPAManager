@@ -20,10 +20,8 @@ public class ServerManager {
     private ServerManager() {}
     
     public static void runServer() throws IOException {
-	if (serverSocket == null) {
-	    serverSocket = new ServerSocket(RequestWrapper.PORT);
-	    startListening();
-	}
+        serverSocket = new ServerSocket(RequestWrapper.PORT);
+        startListening();
     }
     
     private static void startListening() {
@@ -34,7 +32,7 @@ public class ServerManager {
 		ManageRequestThread m = new ManageRequestThread(clientSocket);
 		m.start();
 	    } catch (IOException IOEx) {
-		
+		System.out.println("Server manager start listening error");
 	    }
 	}
     }

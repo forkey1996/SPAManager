@@ -160,5 +160,21 @@ public class DatabaseUtilities {
 	}
 	return null;
     }
+    
+    public static Integer deleteTransactions(Integer customerID)
+    {
+        RequestWrapper request = new RequestWrapper("DeleteTransactions");
+	request.getRequestParameters().put("CustomerID", customerID.toString());
+        ClientManager client = new ClientManager();
+	client.startClient(request);
+	if (client.getResponse() != null) {
+            if (client.getResponse() instanceof String){
+                System.out.println((String)client.getResponse());
+                return -1;
+            }
+	    return (Integer)client.getResponse();
+	}
+	return null;
+    }
 
 }
