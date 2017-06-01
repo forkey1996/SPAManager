@@ -30,19 +30,31 @@ public class DeleteTransactionsCommand extends Command{
     }
 
     @Override
-    public void Execute() {
+    public void Execute() throws SQLException, IOException {
         Connection con = DatabaseConnection.getConnection();
         int affectedRows = 0;
-        try {
-            String query = "delete from wallettransaction where customerID=?";
-            try(PreparedStatement st = con.prepareStatement(query);){
-                st.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
-                affectedRows = st.executeUpdate(); 
-                output.writeObject(affectedRows);
-            } 
-        } catch (SQLException | IOException ex) {
-            System.out.println("Error while proccessing request or sending a response: " + ex.getMessage());
-        }
+        
+        String query = "delete from wallettransaction where customerID=?";
+        try(PreparedStatement st = con.prepareStatement(query);){
+            st.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
+            affectedRows = st.executeUpdate(); 
+            output.writeObject(affectedRows);
+        } 
+        
+        query = "delete from current where customerID=?";
+        try(PreparedStatement st = con.prepareStatement(query);){
+            st.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
+            affectedRows = st.executeUpdate(); 
+            output.writeObject(affectedRows);
+        } 
+        
+        query = "delete from access where customerID=?";
+        try(PreparedStatement st = con.prepareStatement(query);){
+            st.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
+            affectedRows = st.executeUpdate(); 
+            output.writeObject(affectedRows);
+        } 
+        
 
     }
 }

@@ -20,36 +20,31 @@ import wrappers.AreaWrapper;
  *
  * @author AIM632
  */
-public class GetAreasCommand extends Command{
-    
-    public GetAreasCommand(RequestWrapper request, ObjectOutputStream output){
+public class GetAreasCommand extends Command {
+
+    public GetAreasCommand(RequestWrapper request, ObjectOutputStream output) {
         super(request, output);
     }
-    
+
     @Override
-    public void Execute(){
-        
+    public void Execute() throws SQLException, IOException {
+
         ArrayList<AreaWrapper> areas = new ArrayList<>();
         Connection con = DatabaseConnection.getConnection();
-       try{ 
         String query = "SELECT * FROM area";
-        
-        PreparedStatement statement = con.prepareStatement(query);
-        ResultSet result = statement.executeQuery();
-        
-        while(result.next()){
-       
-            int id = result.getInt("areaID");
-            String name = result.getString("name");
-            int product = result.getInt("productID");
-            AreaWrapper area = new AreaWrapper(id, name, product);
-            areas.add(area);
+
+        try (PreparedStatement statement = con.prepareStatement(query);) {
+            try (ResultSet result = statement.executeQuery();) {
+                while (result.next()) {
+                    int id = result.getInt("areaID");
+                    String name = result.getString("name");
+                    int product = result.getInt("productID");
+                    AreaWrapper area = new AreaWrapper(id, name, product);
+                    areas.add(area);
+                }
+            }
         }
-        
-            output.writeObject(areas);
-        } catch (IOException | SQLException ex) {
-           System.out.println("Error while proccessing request or sending a response: " + ex.getMessage());
-        }
-        
+        output.writeObject(areas);
+
     }
 }

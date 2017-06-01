@@ -33,44 +33,40 @@ public class CashoutCommand extends Command{
     }
     
     @Override
-    public void Execute() {
+    public void Execute() throws SQLException, IOException {
         Connection con = DatabaseConnection.getConnection();
         boolean verify = false;
-        try{
-            ArrayList<BoughtProductWrapper> invoice = new ArrayList<>();
-            String query = 
-                     "select wt.transactionID, p.productID, p.name, p.price, t.quantity"
-                    +" from customer c join wallettransaction wt on(c.customerID=wt.customerID)"
-                    +" join transaction t on(wt.transactionID=t.transactionID)"
-                    +" join product p on(t.productID = p.productID)"
-                    +" where c.customerID = ?";
-            
-            PreparedStatement statement = con.prepareStatement(query);
-            statement.setInt(1,Integer.valueOf(request.getRequestParameters().get("CustomerID")));
-            ResultSet result = statement.executeQuery();
-            
-            for(BoughtProductWrapper p: invoice)
-            {
-               System.out.println(p);
-            }
-            
-            while(result.next())
-            {
-                int transaction = result.getInt("transactionID");
-                int product     = result.getInt("productID");
-                double price    = result.getDouble("price");
-                String name     = result.getString("name");
-                int amount      = result.getInt("quantity");    
-                invoice.add(new BoughtProductWrapper(product, transaction, name, price, amount));
-            }
+        
+        ArrayList<BoughtProductWrapper> invoice = new ArrayList<>();
+        String query = 
+                 "select wt.transactionID, p.productID, p.name, p.price, t.quantity"
+                +" from customer c join wallettransaction wt on(c.customerID=wt.customerID)"
+                +" join transaction t on(wt.transactionID=t.transactionID)"
+                +" join product p on(t.productID = p.productID)"
+                +" where c.customerID = ?";
 
-            
-            output.writeObject(invoice);
+        try(PreparedStatement statement = con.prepareStatement(query);){
+            statement.setInt(1,Integer.valueOf(request.getRequestParameters().get("CustomerID")));
+            try(ResultSet result = statement.executeQuery();){
+
+                for(BoughtProductWrapper p: invoice)
+                {
+                   System.out.println(p);
+                }
+
+                while(result.next())
+                {
+                    int transaction = result.getInt("transactionID");
+                    int product     = result.getInt("productID");
+                    double price    = result.getDouble("price");
+                    String name     = result.getString("name");
+                    int amount      = result.getInt("quantity");    
+                    invoice.add(new BoughtProductWrapper(product, transaction, name, price, amount));
+                }
+                output.writeObject(invoice);
+            }
         }
-        catch(IOException | SQLException err)
-        {
-            System.out.println("Error while proccessing request or sending a response: "+err.getMessage());
-        }
+
     }
     
 }

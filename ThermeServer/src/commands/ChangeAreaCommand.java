@@ -25,49 +25,48 @@ public class ChangeAreaCommand extends Command {
     }
 
     @Override
-    public void Execute() {
+    public void Execute() throws SQLException, IOException {
 
         boolean verify = false;
         String query;
         Connection con = DatabaseConnection.getConnection();
-        try {
-            query = "SELECT customerID, areaID FROM access WHERE customerID = ? AND areaID= ?";
+        
+        query = "SELECT customerID, areaID FROM access WHERE customerID = ? AND areaID= ?";
 
-            PreparedStatement statement = con.prepareStatement(query);
+        try(PreparedStatement statement = con.prepareStatement(query);){
             statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
             statement.setInt(2, Integer.valueOf(request.getRequestParameters().get("AreaID")));
 
             ResultSet result = statement.executeQuery();
 
-            while (result.next()) {
+            if(result.next()) {
                 verify = true;
             }
-
-            if (verify == true) {
-                query = "UPDATE current SET areaID = ? WHERE customerID = ?";
-
-                statement = con.prepareStatement(query);
+        }
+        
+        if (verify == true) {
+            query = "UPDATE current SET areaID = ? WHERE customerID = ?";
+            int rowsAffected = -1;
+            try(PreparedStatement statement = con.prepareStatement(query);){
                 statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("AreaID")));
                 statement.setInt(2, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
 
-                int rowsAffected = statement.executeUpdate();
+                rowsAffected = statement.executeUpdate();
+            }
+            
+            if (rowsAffected == 0) {
+                query = "INSERT INTO current VALUES(?,?)";
 
-                if (rowsAffected == 0) {
-                    query = "INSERT INTO current VALUES(?,?)";
-
-                    statement = con.prepareStatement(query);
+                try(PreparedStatement statement = con.prepareStatement(query);){
                     statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
                     statement.setInt(2, Integer.valueOf(request.getRequestParameters().get("AreaID")));
 
                     rowsAffected = statement.executeUpdate();
                 }
-
             }
-
-            output.writeObject(verify);
-        } catch (IOException | SQLException ex) {
-            System.out.println("Error while proccessing request or sending a response: " + ex.getMessage());
+            
         }
 
+        output.writeObject(verify);
     }
 }

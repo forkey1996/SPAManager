@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,9 +34,10 @@ public class ClientManager {
 	    response = input.readObject();
 	} catch (UnknownHostException hostEx) { 
 	    response = "Unreachable Host:" + hostEx.getMessage(); 
-	    return ConnectionError.UNKNOWNHOSTEXCEPTION;
+            JOptionPane.showMessageDialog(null, response, "Error", JOptionPane.ERROR_MESSAGE);
+	    return ConnectionError.NOERROR;
 	} catch (IOException IOEx) {
-	    response = "I/O error: " + IOEx.getMessage();
+	    response = "I/O error: " + IOEx.getMessage();  
 	    return ConnectionError.IOEXCEPTION;
 	} catch (ClassNotFoundException classEx) {
 	    response = "Bad deserialization: " + classEx.getMessage();

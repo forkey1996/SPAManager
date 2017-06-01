@@ -5,7 +5,6 @@
  */
 package client.app;
 
-import java.net.UnknownHostException;
 import uiPannels.MainFrame;
 
 /**
@@ -13,7 +12,7 @@ import uiPannels.MainFrame;
  * @author fernando
  */
 public class Application {
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) {
 	MainFrame mainPanel = new MainFrame();
 	mainPanel.setVisible(true);
     }

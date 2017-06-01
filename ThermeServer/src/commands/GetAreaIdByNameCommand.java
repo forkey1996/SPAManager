@@ -26,28 +26,21 @@ public class GetAreaIdByNameCommand extends Command {
     }
     
     @Override
-    public void Execute(){
+    public void Execute() throws SQLException, IOException{
         
         Connection con = DatabaseConnection.getConnection();
-        try{ 
+        
         String query = "SELECT areaID FROM area WHERE name=?";
-        
-        PreparedStatement statement = con.prepareStatement(query);
-        statement.setString(1,request.getRequestParameters().get("areaName"));
-        
-        ResultSet result = statement.executeQuery();
-        
-        int id = 1;
-        
-        while(result.next()){
-            id = result.getInt("areaID"); 
+
+        try(PreparedStatement statement = con.prepareStatement(query);){
+            statement.setString(1,request.getRequestParameters().get("areaName"));
+
+            try(ResultSet result = statement.executeQuery();){
+                int id = 1;
+                while(result.next())
+                    id = result.getInt("areaID"); 
+                output.writeObject(id);
+            }
         }
-        
-        output.writeObject(id);
-        
-        } catch (IOException | SQLException ex) {
-           System.out.println("Error while proccessing request or sending a response: " + ex.getMessage());
-        }
-        
     }
 }

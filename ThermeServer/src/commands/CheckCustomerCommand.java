@@ -25,24 +25,20 @@ public class CheckCustomerCommand extends Command {
     }
 
     @Override
-    public void Execute() {
+    public void Execute() throws SQLException, IOException {
 
         boolean verify = false;
         Connection con = DatabaseConnection.getConnection();
-        try {
-            String query = "SELECT customerID FROM customer WHERE customerID = ?";
+        
+        String query = "SELECT customerID FROM customer WHERE customerID = ?";
 
-            PreparedStatement statement = con.prepareStatement(query);
+        try(PreparedStatement statement = con.prepareStatement(query);){
             statement.setInt(1, Integer.valueOf(request.getRequestParameters().get("CustomerID")));
-            ResultSet result = statement.executeQuery();
-            
-            while(result.next()) {
-                verify = true;
+            try(ResultSet result = statement.executeQuery();){
+                if(result.next()) 
+                    verify = true;
+                output.writeObject(verify);
             }
-
-            output.writeObject(verify);
-        } catch (IOException | SQLException ex) {
-            System.out.println("Error while proccessing request or sending a response: " + ex.getMessage());
         }
 
     }

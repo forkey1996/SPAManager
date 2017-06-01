@@ -27,31 +27,29 @@ public class GetProductsCommand extends Command {
     }
 
     @Override
-    public void Execute() {
+    public void Execute() throws SQLException, IOException {
 
         ArrayList<ProductWrapper> products = new ArrayList<>();
         Connection con = DatabaseConnection.getConnection();
-        try {
-            String query = "SELECT * FROM product";
 
-            PreparedStatement statement = con.prepareStatement(query);
-            ResultSet result = statement.executeQuery();
+        String query = "SELECT * FROM product";
 
-            while (result.next()) {
+        try (PreparedStatement statement = con.prepareStatement(query);) {
+            try (ResultSet result = statement.executeQuery();) {
 
-                int id = result.getInt("productID");
-                String name = result.getString("name");
-                double price = result.getInt("price");
-                int typeid = result.getInt("typeID");
-                ProductWrapper product = new ProductWrapper(id, name, price, typeid);
-                products.add(product);
-                
+                while (result.next()) {
+
+                    int id = result.getInt("productID");
+                    String name = result.getString("name");
+                    double price = result.getInt("price");
+                    int typeid = result.getInt("typeID");
+                    ProductWrapper product = new ProductWrapper(id, name, price, typeid);
+                    products.add(product);
+
+                }
+
+                output.writeObject(products);
             }
-
-            output.writeObject(products);
-            
-        } catch (IOException | SQLException ex) {
-            System.out.println("Error while proccessing request or sending a response: " + ex.getMessage());
         }
 
     }

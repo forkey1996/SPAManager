@@ -50,5 +50,10 @@ public class DatabaseConnection {
         return connection;
     }
     
+    public static void closeConnection() throws SQLException
+    {
+        if(connection != null)
+            connection.close();
+    }
     
 }

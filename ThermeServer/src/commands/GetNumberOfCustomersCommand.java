@@ -21,43 +21,42 @@ import wrappers.BoughtProductWrapper;
  * @author Ioan-Emanuel Popescu
  */
 public class GetNumberOfCustomersCommand extends Command {
-     public GetNumberOfCustomersCommand (RequestWrapper request, ObjectOutputStream output) {
+
+    public GetNumberOfCustomersCommand(RequestWrapper request, ObjectOutputStream output) {
         super(request, output);
     }
-    
+
     @Override
-    public void Execute() {
+    public void Execute() throws SQLException, IOException {
         Connection con = DatabaseConnection.getConnection();
-        
-        try{
-            Integer index = Integer.parseInt(request.getRequestParameters().get("indexArea"));
-            String query = null;
-            PreparedStatement statement;
-            
-            if(index==0){
+
+        Integer index = Integer.parseInt(request.getRequestParameters().get("indexArea"));
+        String query = null;
+        PreparedStatement statement = null;
+        try {
+            if (index == 0) {
                 query = "select count(customerID) nr from current";
                 statement = con.prepareStatement(query);
-            }
-            else{
-                query = "select count(customerID) nr from current where areaID=?"; 
+            } else {
+                query = "select count(customerID) nr from current where areaID=?";
                 statement = con.prepareStatement(query);
-                statement.setInt(1,index);
-            }
-            
-            ResultSet result = statement.executeQuery();
-            
-            int count = 0;
-            
-            while(result.next())
-            {
-                count = result.getInt("nr");
+                statement.setInt(1, index);
             }
 
-            output.writeObject(count);
-        }
-        catch(IOException | SQLException err)
-        {
-            System.out.println("Error while proccessing request or sending a response: "+err.getMessage());
+            try (ResultSet result = statement.executeQuery();) {
+
+                int count = 0;
+
+                while (result.next()) {
+                    count = result.getInt("nr");
+                }
+
+                output.writeObject(count);
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
         }
     }
 }

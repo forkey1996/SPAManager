@@ -24,100 +24,113 @@ public class MainFrame extends javax.swing.JFrame {
 
     ArrayList<AreaWrapper> areas = new ArrayList<>();
     ArrayList<AreaWrapper> areasCheck = new ArrayList<>();
-    
-    ArrayList<ProductWrapper> products = new ArrayList<>();
-    
-    
-    public MainFrame() {
-	initComponents();
-        
-        
-	areas = DatabaseUtilities.getAllAreas();
-        
-        areasCheck = DatabaseUtilities.getAllAreas();      
-        areasCheck.add(0, new AreaWrapper(0,"Total",0));
-        
-	products = DatabaseUtilities.getAllProducts();
-        
-	bindCombobox(comboBoxAreas, areas);	
-	bindCombobox(comboBoxAreasCheck, areasCheck);
-	bindCombobox(comboBoxProducts, products);
-	
-	buttonCheckCustomer.addActionListener(event -> {
-	    try {
-		JOptionPane.showMessageDialog(null, 
-			(DatabaseUtilities.checkCustomer(Integer.parseInt(textFieldCustomerID.getText().trim())) ? 
-				"Valid customer" : "Invalid customer"));
-	    } catch (NumberFormatException ex) {
-		JOptionPane.showMessageDialog(null, "Incorrect format number!");
-	    }
-	});
-	
-	buttonBuy.addActionListener(event -> {
-	    try {
-		int customerID = Integer.parseInt(textFieldCustomerID.getText().trim());
-		int productID = ((ProductWrapper)comboBoxProducts.getSelectedItem()).getProductID();
-		int quantity = (Integer)spinnerQuantity.getValue();
-		int bought = DatabaseUtilities.buyProduct(customerID, productID, quantity);
-		JOptionPane.showMessageDialog(null, (bought>0 ? "Bought" : "Not bought"));
 
-	    } catch (NumberFormatException ex) {
-		JOptionPane.showMessageDialog(null, "Incorrect format number!");
-	    }
-	});
-	
-	buttonChange.addActionListener(event -> {
-	    try {
-		JOptionPane.showMessageDialog(null, 
-			(DatabaseUtilities.changeArea(Integer.parseInt(textFieldCustomerID.getText().trim()),
-				((AreaWrapper)comboBoxAreas.getSelectedItem()).getAreaID())) ? 
-				"Area changed" : "Access denied");
-	    } catch (NumberFormatException ex) {
-		JOptionPane.showMessageDialog(null, "Incorrect format number!");
-	    }
-	});
-	
-	buttonAddCustomer.addActionListener(event -> {
-		Integer newCustomer = DatabaseUtilities.addCustomer(textFieldCustomerName.getText().trim());
-		if (newCustomer != -1)
-		    textFieldNewCustomerID.setText(Integer.toString(newCustomer));
-	});
-        
+    ArrayList<ProductWrapper> products = new ArrayList<>();
+
+    boolean validCustomerID = false;
+
+    public MainFrame() {
+        initComponents();
+
+        areas = DatabaseUtilities.getAllAreas();
+
+        areasCheck = DatabaseUtilities.getAllAreas();
+        areasCheck.add(0, new AreaWrapper(0, "Total", 0));
+
+        products = DatabaseUtilities.getAllProducts();
+
+        bindCombobox(comboBoxAreas, areas);
+        bindCombobox(comboBoxAreasCheck, areasCheck);
+        bindCombobox(comboBoxProducts, products);
+
+        buttonCheckCustomer.addActionListener(event -> {
+            if (!validCustomerID) {
+                JOptionPane.showMessageDialog(null, "Invalid customerID!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try {
+                JOptionPane.showMessageDialog(null,
+                        (DatabaseUtilities.checkCustomer(Integer.parseInt(textFieldCustomerID.getText().trim()))
+                        ? "Valid customer" : "Invalid customer"));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Incorrect format number!");
+            }
+        });
+
+        buttonBuy.addActionListener(event -> {
+            if (!validCustomerID) {
+                JOptionPane.showMessageDialog(null, "Invalid customerID!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try {
+                int customerID = Integer.parseInt(textFieldCustomerID.getText().trim());
+                int productID = ((ProductWrapper) comboBoxProducts.getSelectedItem()).getProductID();
+                int quantity = (Integer) spinnerQuantity.getValue();
+                int bought = DatabaseUtilities.buyProduct(customerID, productID, quantity);
+                JOptionPane.showMessageDialog(null, (bought > 0 ? "Bought" : "Not bought"));
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Incorrect format number!");
+            }
+        });
+
+        buttonChange.addActionListener(event -> {
+            if (!validCustomerID) {
+                JOptionPane.showMessageDialog(null, "Invalid customerID!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try {
+                JOptionPane.showMessageDialog(null,
+                        (DatabaseUtilities.changeArea(Integer.parseInt(textFieldCustomerID.getText().trim()),
+                                ((AreaWrapper) comboBoxAreas.getSelectedItem()).getAreaID()))
+                        ? "Area changed" : "Access denied");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Incorrect format number!");
+            }
+        });
+
+        buttonAddCustomer.addActionListener(event -> {
+            Integer newCustomer = DatabaseUtilities.addCustomer(textFieldCustomerName.getText().trim());
+            if (newCustomer != -1) {
+                textFieldNewCustomerID.setText(Integer.toString(newCustomer));
+            }
+        });
+
         comboBoxProducts.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setTextFieldPrice();
             }
         });
-        
+
         setTextFieldPrice();
         setNumberOfCustomers();
     }
-    
+
     private void setTextFieldPrice() {
         Object value = comboBoxProducts.getSelectedItem();
         if (value != null && value instanceof ProductWrapper) {
             spinnerQuantity.setValue(1);
-            textFieldPrice.setText(Double.toString(((ProductWrapper)value).getPrice()));
+            textFieldPrice.setText(Double.toString(((ProductWrapper) value).getPrice()));
         }
     }
-    
+
     private void bindCombobox(JComboBox combo, ArrayList arrayToBind) {
-	if (areas != null) {
-	    DefaultComboBoxModel areaModel = new DefaultComboBoxModel(arrayToBind.toArray());
-	    combo.setModel(areaModel);
-	    combo.setRenderer(new DefaultListCellRenderer() {
-		@Override
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-		    Component currentComponent = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-		    if(value instanceof Object){
-			Object area = (Object) value;
-			setText(area.toString());
-		    }
-		    return currentComponent;
-		}
-	    } );
-	}
+        if (areas != null) {
+            DefaultComboBoxModel areaModel = new DefaultComboBoxModel(arrayToBind.toArray());
+            combo.setModel(areaModel);
+            combo.setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                    Component currentComponent = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    if (value instanceof Object) {
+                        Object area = (Object) value;
+                        setText(area.toString());
+                    }
+                    return currentComponent;
+                }
+            });
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -202,9 +215,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         textFieldCustomerID.setText("Customer ID");
         textFieldCustomerID.setMaximumSize(new java.awt.Dimension(2147483647, 24));
-        textFieldCustomerID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldCustomerIDActionPerformed(evt);
+        textFieldCustomerID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textFieldCustomerIDFocusLost(evt);
             }
         });
         panelCenter.add(textFieldCustomerID);
@@ -398,53 +411,53 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textFieldCustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldCustomerIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldCustomerIDActionPerformed
-
     private void textFieldTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldTotalActionPerformed
 
     private void buttonCashoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCashoutActionPerformed
+        if (!validCustomerID) {
+            JOptionPane.showMessageDialog(null, "Invalid customerID!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Integer customerID = Integer.parseInt(textFieldCustomerID.getText());
         Integer rowsAffected = DatabaseUtilities.deleteTransactions(customerID);
         textFieldTotal.setText("0.0");
     }//GEN-LAST:event_buttonCashoutActionPerformed
 
     private void textFieldTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textFieldTotalMouseClicked
+        if (!validCustomerID) {
+            JOptionPane.showMessageDialog(null, "Invalid customerID!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Integer customerID = Integer.parseInt(textFieldCustomerID.getText());
         ArrayList<BoughtProductWrapper> transactions = DatabaseUtilities.cashout(customerID);
-        if(transactions == null)
-        {
-            JOptionPane.showMessageDialog(null,"Customer with ID "+customerID.toString()+" has no transactions","Invoice",JOptionPane.INFORMATION_MESSAGE);
+        if (transactions == null) {
+            JOptionPane.showMessageDialog(null, "Customer with ID " + customerID.toString() + " has no transactions", "Invoice", JOptionPane.INFORMATION_MESSAGE);
             textFieldTotal.setText("0.0");
             return;
         }
-        
+
         String joinTransactions = "";
-        for(BoughtProductWrapper i: transactions)
-        {
+        for (BoughtProductWrapper i : transactions) {
             joinTransactions += i.toString() + "\n";
         }
-        
-        if(joinTransactions.equals(""))
-        {
-            JOptionPane.showMessageDialog(null,"Customer with ID "+customerID.toString()+" has no transactions","Invoice",JOptionPane.INFORMATION_MESSAGE);
+
+        if (joinTransactions.equals("")) {
+            JOptionPane.showMessageDialog(null, "Customer with ID " + customerID.toString() + " has no transactions", "Invoice", JOptionPane.INFORMATION_MESSAGE);
             textFieldTotal.setText("0.0");
             return;
         }
-        
-        String message = "Transactions carried out by customer with ID "+customerID.toString()+":\n\n"+joinTransactions;
+
+        String message = "Transactions carried out by customer with ID " + customerID.toString() + ":\n\n" + joinTransactions;
         double sum = 0.0;
-        for(BoughtProductWrapper p: transactions)
-        {
+        for (BoughtProductWrapper p : transactions) {
             sum += p.getAmount() * p.getPrice();
         }
-        
+
         textFieldTotal.setText(Double.toString(sum));
-        JOptionPane.showMessageDialog(null,message+"\n\n                        Total: "+sum+" RON","Invoice",JOptionPane.INFORMATION_MESSAGE);
-        
+        JOptionPane.showMessageDialog(null, message + "\n\n                        Total: " + sum + " RON", "Invoice", JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_textFieldTotalMouseClicked
 
     private void comboBoxAreasCheckItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxAreasCheckItemStateChanged
@@ -454,38 +467,49 @@ public class MainFrame extends javax.swing.JFrame {
     private void spinnerQuantityStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerQuantityStateChanged
         Object value = comboBoxProducts.getSelectedItem();
         if (value != null && value instanceof ProductWrapper) {
-            if (((ProductWrapper)value).getTypeID() == 1) {
+            if (((ProductWrapper) value).getTypeID() == 1) {
                 spinnerQuantity.setValue(1);
                 return;
             }
-            Integer quantity = (Integer)spinnerQuantity.getValue();
-            
-            textFieldPrice.setText(Double.toString(((ProductWrapper)value).getPrice() * quantity));
-            
+            Integer quantity = (Integer) spinnerQuantity.getValue();
+
+            textFieldPrice.setText(Double.toString(((ProductWrapper) value).getPrice() * quantity));
+
         }
     }//GEN-LAST:event_spinnerQuantityStateChanged
 
+    private void textFieldCustomerIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFieldCustomerIDFocusLost
+        try {
+            Integer.parseInt(textFieldCustomerID.getText());
+            validCustomerID = true;
+        } catch (NumberFormatException nrEx) {
+            validCustomerID = false;
+            //textFieldCustomerID.requestFocus();
+        }
+    }//GEN-LAST:event_textFieldCustomerIDFocusLost
+
     private void setNumberOfCustomers() {
         String selectedValue = comboBoxAreasCheck.getSelectedItem().toString();
-        
+
         Integer index;
-        
-        if(selectedValue.equals("Total"))
+
+        if (selectedValue.equals("Total")) {
             index = 0;
-        else
+        } else {
             index = DatabaseUtilities.getAreaID(selectedValue);
+        }
 
         Integer numberOfCustomers = DatabaseUtilities.getNumberOfCustomers(index);
-        
+
         textFieldNumber.setText(numberOfCustomers.toString());
     }
 
     public static void main(String args[]) {
-	java.awt.EventQueue.invokeLater(new Runnable() {
-	    public void run() {
-		new MainFrame().setVisible(true);
-	    }
-	});
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -539,6 +563,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldPrice;
     private javax.swing.JTextField textFieldTotal;
     // End of variables declaration//GEN-END:variables
-
 
 }

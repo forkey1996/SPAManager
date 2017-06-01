@@ -6,6 +6,7 @@
 package utilities;
 
 import client.connection.ClientManager;
+import client.connection.ConnectionError;
 import core.connection.RequestWrapper;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -29,7 +30,8 @@ public class DatabaseUtilities {
     public static ArrayList<AreaWrapper> getAllAreas() {
 	RequestWrapper request = new RequestWrapper("GetAllAreas");
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
             try {
                 return (ArrayList<AreaWrapper>)client.getResponse();
@@ -40,15 +42,12 @@ public class DatabaseUtilities {
 	}
 	return null;
     }
-    
-    /**
-     *
-     * @return
-     */
+
     public static ArrayList<ProductWrapper> getAllProducts() {
 	RequestWrapper request = new RequestWrapper("GetAllProducts");
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (ArrayList<ProductWrapper>)client.getResponse();
 	}
@@ -64,7 +63,8 @@ public class DatabaseUtilities {
 	RequestWrapper request = new RequestWrapper("CheckCustomer");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (boolean)client.getResponse();
 	}
@@ -82,7 +82,8 @@ public class DatabaseUtilities {
 	request.getRequestParameters().put("CustomerID", customerID.toString());
 	request.getRequestParameters().put("AreaID", areaID.toString());
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (boolean)client.getResponse();
 	}
@@ -95,7 +96,8 @@ public class DatabaseUtilities {
 	request.getRequestParameters().put("ProductID", productID.toString());
 	request.getRequestParameters().put("Quantity", quantity.toString());
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (Integer)client.getResponse();
 	}
@@ -114,7 +116,8 @@ public class DatabaseUtilities {
 	RequestWrapper request = new RequestWrapper("Cashout");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
         ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (ArrayList<BoughtProductWrapper>)client.getResponse();
 	}
@@ -130,7 +133,8 @@ public class DatabaseUtilities {
 	RequestWrapper request = new RequestWrapper("AddCustomer");
 	request.getRequestParameters().put("CustomerName", CustomerName);
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (Integer)client.getResponse();
 	}
@@ -142,7 +146,8 @@ public class DatabaseUtilities {
         RequestWrapper request = new RequestWrapper("GetAreaIdByName");
 	request.getRequestParameters().put("areaName", areaName);
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (Integer)client.getResponse();
 	}
@@ -154,7 +159,8 @@ public class DatabaseUtilities {
         RequestWrapper request = new RequestWrapper("GetNumberOfCustomers");
 	request.getRequestParameters().put("indexArea", indexArea.toString());
 	ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
 	    return (Integer)client.getResponse();
 	}
@@ -166,7 +172,8 @@ public class DatabaseUtilities {
         RequestWrapper request = new RequestWrapper("DeleteTransactions");
 	request.getRequestParameters().put("CustomerID", customerID.toString());
         ClientManager client = new ClientManager();
-	client.startClient(request);
+	if(client.startClient(request) != ConnectionError.NOERROR)
+            System.exit(-1);
 	if (client.getResponse() != null) {
             if (client.getResponse() instanceof String){
                 System.out.println((String)client.getResponse());
